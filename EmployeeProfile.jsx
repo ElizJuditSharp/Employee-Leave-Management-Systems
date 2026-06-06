@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
+import API from '../api.js'
 
 export default function EmployeeProfile() {
   const { id }               = useParams()
@@ -12,7 +13,7 @@ export default function EmployeeProfile() {
 
   useEffect(() => {
     if (localStorage.getItem('role') !== 'admin') { navigate('/'); return }
-    axios.get(`http://localhost:5000/api/employee-profile/${id}`)
+    axios.get(`${API}/api/employee-profile/${id}`)
       .then(res => {
         setEmp(res.data.employee)
         setLeaves(res.data.leaves)
