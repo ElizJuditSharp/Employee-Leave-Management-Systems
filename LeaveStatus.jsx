@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
+import API from '../api.js'
 
 export default function LeaveStatus() {
   const navigate         = useNavigate()
@@ -11,7 +12,7 @@ export default function LeaveStatus() {
   useEffect(() => {
     const uid = localStorage.getItem('user_id')
     if (!uid) { navigate('/'); return }
-    axios.get(`http://localhost:5000/api/my-leaves/${uid}`)
+    axios.get(`${API}/api/my-leaves/${uid}`)
       .then(r => { set(r.data); setLd(false) })
       .catch(() => setLd(false))
   }, [])
@@ -22,7 +23,6 @@ export default function LeaveStatus() {
       <div style={content}>
         <h2 style={title}>My Leave History</h2>
         <p style={sub}>{leaves.length} request(s) found</p>
-
         <div style={tableCard}>
           <div style={tableHead}>All My Leave Requests</div>
           {loading
