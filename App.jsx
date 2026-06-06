@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Login           from './pages/Login.jsx'
-import EmployeeDash    from './pages/EmployeeDash.jsx'
-import ApplyLeave      from './pages/ApplyLeave.jsx'
-import LeaveStatus     from './pages/LeaveStatus.jsx'
-import AdminDash       from './pages/AdminDash.jsx'
-import EmployeeProfile from './pages/EmployeeProfile.jsx'
-import Register from './pages/Register.jsx'
+import Login           from './Login.jsx'
+import EmployeeDash    from './EmployeeDash.jsx'
+import ApplyLeave      from './ApplyLeave.jsx'
+import LeaveStatus     from './LeaveStatus.jsx'
+import AdminDash       from './AdminDash.jsx'
+import EmployeeProfile from './EmployeeProfile.jsx'
+import Register from './Register.jsx'
 
 function App() {
   return (
