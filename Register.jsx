@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
+import API from '../api.js'
 
 export default function Register() {
   const navigate               = useNavigate()
@@ -22,7 +23,7 @@ export default function Register() {
 
     setLd(true); setErr(''); setOk('')
     try {
-      const res = await axios.post('http://localhost:5000/api/register', {
+      const res = await axios.post(`${API}/api/register`, {
         name, email, password, role, department: dept
       })
       if (res.data.success) {
