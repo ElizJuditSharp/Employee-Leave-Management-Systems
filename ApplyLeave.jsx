@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
+import API from '../api.js'
 
 export default function ApplyLeave() {
   const navigate             = useNavigate()
@@ -21,18 +22,17 @@ export default function ApplyLeave() {
 
   const submit = async () => {
     const uid = localStorage.getItem('user_id')
-    if (!uid)   { navigate('/'); return }
-    if (!type)  { setErr('Please select a leave type.');           return }
-    if (!from)  { setErr('Please select a start date.');           return }
-    if (!to)    { setErr('Please select an end date.');            return }
-    if (!reason.trim()) { setErr('Please enter a reason.');        return }
-    if (days() < 1)     { setErr('End date cannot be before start date.'); return }
+    if (!uid)               { navigate('/'); return }
+    if (!type)              { setErr('Please select a leave type.');          return }
+    if (!from)              { setErr('Please select a start date.');          return }
+    if (!to)                { setErr('Please select an end date.');           return }
+    if (!reason.trim())     { setErr('Please enter a reason.');               return }
+    if (days() < 1)         { setErr('End date cannot be before start date.'); return }
 
     setLd(true); setErr(''); setOk('')
     try {
-      const res = await axios.post('http://localhost:5000/api/apply', {
-        user_id: uid, leave_type: type,
-        from_date: from, to_date: to, reason
+      const res = await axios.post(`${API}/api/apply`, {
+        user_id: uid, leave_type: type, from_date: from, to_date: to, reason
       })
       if (res.data.success) {
         setOk('✅ Leave request submitted! It is now pending admin approval.')
@@ -49,11 +49,9 @@ export default function ApplyLeave() {
       <Navbar />
       <div style={content}>
         <h2 style={title}>Apply for Leave</h2>
-
         <div style={card}>
           <div style={cardH}>Fill in Leave Details</div>
           <div style={cardB}>
-
             {success && <div style={okBox}>{success}</div>}
             {error   && <div style={errBox}>⚠️ {error}</div>}
 
@@ -76,9 +74,7 @@ export default function ApplyLeave() {
               </div>
             </div>
 
-            {days() > 0 && (
-              <div style={info}>📅 Duration: <strong>{days()} day(s)</strong></div>
-            )}
+            {days() > 0 && <div style={info}>📅 Duration: <strong>{days()} day(s)</strong></div>}
 
             <label style={lbl}>Reason for Leave</label>
             <textarea style={{ ...inp, resize:'vertical' }} rows="4"
