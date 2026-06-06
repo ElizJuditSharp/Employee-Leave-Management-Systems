@@ -21,6 +21,7 @@ export default function Navbar() {
         {role === 'admin' ? (
           <>
             <button style={btn()} onClick={() => navigate('/admin')}>Dashboard</button>
+             <button style={btn()} onClick={() => navigate('/register')}>+ Add Employee</button>
           </>
         ) : (
           <>
