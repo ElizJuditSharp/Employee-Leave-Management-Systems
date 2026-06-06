@@ -1,10 +1,11 @@
 import mysql.connector
+import os
 
-DB_HOST = "acela.proxy.rlwy.net"
-DB_USER = "root"
-DB_PASS = "mAvvZTaGUuPXxMBkSLojDeGQyaUnuhvu"   # ← paste the password after clicking show
-DB_NAME = "railway"
-DB_PORT = 59903
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_USER = os.environ.get('DB_USER', 'root')
+DB_PASS = os.environ.get('DB_PASS', '')
+DB_NAME = os.environ.get('DB_NAME', 'railway')
+DB_PORT = int(os.environ.get('DB_PORT', 3306))
 
 def setup():
     try:
