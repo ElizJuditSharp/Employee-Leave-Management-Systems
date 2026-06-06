@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
+import API from '../api.js'
 
 export default function EmployeeDash() {
   const navigate         = useNavigate()
@@ -13,7 +14,7 @@ export default function EmployeeDash() {
   useEffect(() => {
     if (!userId) { navigate('/'); return }
     if (localStorage.getItem('role') === 'admin') { navigate('/admin'); return }
-    axios.get(`http://localhost:5000/api/my-leaves/${userId}`)
+    axios.get(`${API}/api/my-leaves/${userId}`)
       .then(r => { set(r.data); setLd(false) })
       .catch(() => setLd(false))
   }, [])
@@ -27,14 +28,13 @@ export default function EmployeeDash() {
         <h2 style={greet}>Welcome back, {name} 👋</h2>
         <p style={subTxt}>Here is your leave summary</p>
 
-        {/* STAT CARDS */}
         <div style={grid4}>
           {[
-            { label:'Total Applied', val:leaves.length,   color:'#2d6a9f' },
+            { label:'Total Applied', val:leaves.length,    color:'#2d6a9f' },
             { label:'Approved',      val:count('approved'), color:'#27ae60' },
             { label:'Pending',       val:count('pending'),  color:'#f39c12' },
             { label:'Declined',      val:count('declined'), color:'#e74c3c' },
-          ].map((c,i) => (
+          ].map((c, i) => (
             <div key={i} style={card}>
               <div style={{ fontSize:'34px', fontWeight:800, color:c.color }}>{c.val}</div>
               <div style={{ fontSize:'13px', color:'#888', marginTop:'4px' }}>{c.label}</div>
@@ -42,13 +42,11 @@ export default function EmployeeDash() {
           ))}
         </div>
 
-        {/* QUICK LINKS */}
         <div style={{ display:'flex', gap:'12px', marginBottom:'24px' }}>
           <button style={qBtn('#2d6a9f')} onClick={() => navigate('/apply')}>✏️ Apply for Leave</button>
           <button style={qBtn('#27ae60')} onClick={() => navigate('/status')}>📜 View All My Leaves</button>
         </div>
 
-        {/* RECENT TABLE */}
         <div style={tableCard}>
           <div style={tableHead}>Recent Leave Requests</div>
           {loading
@@ -94,6 +92,6 @@ const card      = { background:'#fff', borderRadius:'12px', padding:'20px', text
 const tableCard = { background:'#fff', borderRadius:'12px', boxShadow:'0 2px 8px rgba(0,0,0,0.06)', overflow:'hidden' }
 const tableHead = { padding:'16px 20px', borderBottom:'1px solid #eee', fontWeight:800, color:'#1e3a5f', fontSize:'16px' }
 const empty     = { padding:'40px', textAlign:'center', color:'#aaa', fontSize:'15px' }
-const th        = { background:'#f7f8fc', padding:'11px 14px', textAlign:'left', fontSize:'12px', fontWeight:700, color:'#666', textTransform:'uppercase', letterSpacing:'0.5px' }
+const th        = { background:'#f7f8fc', padding:'11px 14px', textAlign:'left', fontSize:'12px', fontWeight:700, color:'#666', textTransform:'uppercase' }
 const td        = { padding:'12px 14px', fontSize:'14px', borderBottom:'1px solid #f0f0f0' }
 const qBtn      = (bg) => ({ padding:'10px 20px', background:bg, color:'#fff', border:'none', borderRadius:'8px', fontSize:'14px', fontWeight:700, cursor:'pointer', fontFamily:"'Nunito',Arial,sans-serif" })
